@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
       'ဝက်သားနပ်',
       'ဝက်သား ပုန်းရည်ကြီး',
       'ပုဇွန်ဆီပြန်ချက်',
-      'ပြည်ကြိးငါးချက်'
+      'ပြည်ကြိးငါးချက်',
+      'ဆိတ်လက်ဖတ်ထောင်း'
     ];
     List<String> bannerList = [
       'ဆိတ်သားခြောက်ထောင်း',
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
     ];
     return MaterialApp(
       title: 'Material App',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/logo/logo.png'),
@@ -121,13 +123,13 @@ class MyApp extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 14,
                                       height: 0.9,
-            
                                       fontWeight: FontWeight.w700)),
                               const SizedBox(
                                 height: 7,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text("100 BHT",
                                       style: TextStyle(
@@ -136,9 +138,13 @@ class MyApp extends StatelessWidget {
                                           fontWeight: FontWeight.w500)),
                                   Container(
                                       padding: const EdgeInsets.only(
-                                          top: 4, bottom: 4, left: 10, right: 10),
+                                          top: 4,
+                                          bottom: 4,
+                                          left: 10,
+                                          right: 10),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           color: const Color(0xff4CAF50)),
                                       child: const Text(
                                         "Details",
