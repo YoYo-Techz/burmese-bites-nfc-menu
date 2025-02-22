@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 String _imageUrl =
     "https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2019/09/04/80e5a9ca-ce2f-11e9-9cec-db56b3c139e7_image_hires_182307.JPG";
