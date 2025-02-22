@@ -1,4 +1,5 @@
 import 'package:bbmenu/custom_banner_image.dart';
+import 'package:bbmenu/details.dart';
 import 'package:flutter/material.dart';
 
 String _imageUrl =
@@ -99,69 +100,72 @@ class MyApp extends StatelessWidget {
                       crossAxisCount:
                           (orientation == Orientation.portrait) ? 2 : 3),
                   itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 120,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              image: DecorationImage(
-                                  image: NetworkImage(_imageUrl),
-                                  fit: BoxFit.cover)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(7.0),
+                    return InkWell(
+                      onTap: () => _navigateToNextScreen(context),
+                      child: Card(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(data[index].toString(),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      height: 0.9,
-                                      fontWeight: FontWeight.w700)),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text("100 BHT",
-                                      style: TextStyle(
-                                          color: Color(0xff4CAF50),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500)),
-                                  Container(
-                                      padding: const EdgeInsets.only(
-                                          top: 4,
-                                          bottom: 4,
-                                          left: 10,
-                                          right: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: const Color(0xff4CAF50)),
-                                      child: const Text(
-                                        "Details",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400),
-                                      )),
-                                ],
-                              ),
-                            ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 120,
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                image: DecorationImage(
+                                    image: NetworkImage(_imageUrl),
+                                    fit: BoxFit.cover)),
                           ),
-                        ),
-                      ],
-                    ));
+                          Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data[index].toString(),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        height: 0.9,
+                                        fontWeight: FontWeight.w700)),
+                                const SizedBox(
+                                  height: 7,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text("100 BHT",
+                                        style: TextStyle(
+                                            color: Color(0xff4CAF50),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500)),
+                                    Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 4,
+                                            bottom: 4,
+                                            left: 10,
+                                            right: 10),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: const Color(0xff4CAF50)),
+                                        child: const Text(
+                                          "Details",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )),
+                    );
                   },
                 ),
               ],
@@ -171,6 +175,9 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+ void _navigateToNextScreen(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Details()));
+  } 
 
   Widget _tab({required String text}) {
     return Padding(
