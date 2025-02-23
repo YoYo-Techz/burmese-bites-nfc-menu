@@ -1,18 +1,23 @@
 import 'package:bbmenu/custom_banner_image.dart';
 import 'package:bbmenu/details.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 String _imageUrl =
     "https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2019/09/04/80e5a9ca-ce2f-11e9-9cec-db56b3c139e7_image_hires_182307.JPG";
 
-void main() => runApp(const MyApp());
+void main() {
+  ResponsiveSizingConfig.instance.setCustomBreakpoints(
+    const ScreenBreakpoints(desktop: 800, tablet: 550, watch: 200),
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
     List<String> tabList = ['Meal', 'Beverage', 'Special', 'Snack'];
     List<String> data = [
       'မုန့်ဟင်းခါး',
@@ -20,8 +25,8 @@ class MyApp extends StatelessWidget {
       'ဝက်သားနပ်',
       'ဝက်သား ပုန်းရည်ကြီး',
       'ပုဇွန်ဆီပြန်ချက်',
-      'ပြည်ကြိးငါးချက်',
-      'ဆိတ်လက်ဖတ်ထောင်း',
+      'ပြည်ကြိးငါးချက်'
+          'ဆိတ်လက်ဖတ်ထောင်း',
       'ပဲပြုတ်ထမင်းသုတ်',
       'ဝက်သားဒုတ်ထိုး'
     ];
@@ -84,8 +89,9 @@ class MyApp extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children:
-                        bannerList.map((text) => _banner(title: text)).toList(),
+                    children: bannerList
+                        .map((text) => _banner(title: text, context: context))
+                        .toList(),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -97,8 +103,12 @@ class MyApp extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:
-                          (orientation == Orientation.portrait) ? 2 : 3),
+                      crossAxisCount: getValueForScreenType<double>(
+                    context: context,
+                    mobile: 2,
+                    tablet: 3,
+                    desktop: 5,
+                  ).toInt()),
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () => _navigateToNextScreen(context),
@@ -106,23 +116,26 @@ class MyApp extends StatelessWidget {
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 120,
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                                image: DecorationImage(
-                                    image: NetworkImage(_imageUrl),
-                                    fit: BoxFit.cover)),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              // height: 120,
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                  image: DecorationImage(
+                                      image: NetworkImage(_imageUrl),
+                                      fit: BoxFit.cover)),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(7.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 5),
                                 Text(data[index].toString(),
                                     style: const TextStyle(
                                         color: Colors.black,
@@ -175,9 +188,23 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
- void _navigateToNextScreen(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Details()));
-  } 
+
+  void _navigateToNextScreen(BuildContext context) {
+    if (getDeviceType(MediaQuery.of(context).size) != DeviceScreenType.mobile) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.9,
+                  child: const Details()));
+        },
+      );
+    } else {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Details()));
+    }
+  }
 
   Widget _tab({required String text}) {
     return Padding(
@@ -193,10 +220,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _banner({required String title}) {
+  Widget _banner({required String title, required BuildContext context}) {
     return Card(
       child: SizedBox(
-          height: 120,
+          height: getValueForScreenType<double>(
+            context: context,
+            mobile: 120,
+            tablet: 160,
+            desktop: 200,
+          ),
           child: AspectRatio(
               aspectRatio: 289 / 120,
               child: Stack(

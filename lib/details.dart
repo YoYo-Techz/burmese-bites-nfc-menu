@@ -28,6 +28,7 @@ class _DetailsState extends State<Details> {
                 aspectRatio: 5 / 3,
                 child: Container(
                   height: 120,
+
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.grey.shade300,
@@ -54,6 +55,7 @@ class _DetailsState extends State<Details> {
                   color: Colors.grey.shade200,
                 ),
                 padding: const EdgeInsets.all(20),
+                width: double.infinity,
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
